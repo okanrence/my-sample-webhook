@@ -35,7 +35,7 @@ try{
     source: "webhook-sample"
   });
 }
-var returnSpeech = "Great, " + query + "is a valid account";
+var returnSpeech = "Great, " + query + " is a valid account";
     
   return res.json({
     speech: returnSpeech,
