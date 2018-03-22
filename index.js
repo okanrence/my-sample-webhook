@@ -33,6 +33,16 @@ if(accountNumber !== null){
   });
 });
 
+restService.get("/v1/query", function(req, res) {
+  var accountNumber = req.query['accountNumber'] ? req.query['accountNumber'] : "Invalid Account" ;
+  
+  return res.json({
+    speech: accountNumber,
+    displayText: accountNumber,
+    source: "webhook-sample"
+  });
+});
+
 
 // restService.get("/v1/query", function(req, res) {
 //   var speech = req.query['username'];
