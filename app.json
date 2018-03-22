@@ -1,0 +1,6 @@
+{
+  "name": "myWebhook",
+  "description": "MyWebHook Sample",
+  "repository": "https://github.com/okanrence/my-sample-webhook.git",
+  "keywords": ["api.ai", "dialogflow", "natural language"]
+}
