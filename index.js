@@ -13,25 +13,48 @@ restService.use(
 
 restService.use(bodyParser.json());
 
-// restService.post("/v1/query", function(req, res) {
-//   var accountNumber =
-//     req.body.result &&
-//     req.body.result.parameters &&
-//     req.body.result.parameters.accountNumber
-//       ? req.body.result.parameters.accountNumber
-//       : null;
-// var returnSpeech = "invalid account"
-// if(accountNumber !== null){
-//   if (accountNumber == "0765094061" )
-//     returnSpeech = "Great, Account verified"
-// }
+restService.post("/v1/query", function(req, res) {
+
+try{
+
+  
+  if(req.body.result.action == "ValidateCustomer")
+  {
+    var query = req.body.result &&
+    req.body.result.parameters &&
+    req.body.result.parameters.Account_number
+      ? req.body.result.parameters.Account_number
+      : null;
+  }
+  else
+  {
+     
+  return res.json({
+    speech: "Sorry I dont understand",
+    displayText: "Sorry I dont understand",
+    source: "webhook-sample"
+  });
+}
+var returnSpeech = "Great, " + query + "is a valid account";
     
-//   return res.json({
-//     speech: returnSpeech,
-//     displayText: returnSpeech,
-//     source: "webhook-sample"
-//   });
-// });
+  return res.json({
+    speech: returnSpeech,
+    displayText: returnSpeech,
+    source: "webhook-sample"
+  });
+}
+catch(err){
+  return res.json({
+    speech: err,
+    displayText: err,
+    source: "webhook-sample"
+  });
+}
+
+});
+
+
+
 
 restService.get("/v1/query", function(req, res) {
   var accountNumber = req.query['accountNumber'] ? req.query['accountNumber'] : "Invalid Account" ;
