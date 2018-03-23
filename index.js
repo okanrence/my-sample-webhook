@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const defaultFallBackResponse = "defaultFallBackResponse";
+const webHookSource = "webHookSource";
 const restService = express();
 
 restService.use(
@@ -27,38 +28,53 @@ if(action == defaultFallBackResponse){
   return res.json({
     speech: "No Action Context",
     displayText: "No Action Context",
-    source: "webhook-sample"
+    source: webHookSource
   });
 }
 
-if(action == "ValidateCustomer")
+if(action == "ValidateCustomerAccount")
   {
     var accountNumber = req.body.result.parameters.Account_number
   
     if (!isNumeric(accountNumber)){
       returnSpeech = "Hmmm...'" + accountNumber + "' does not appear to be a valid account number.";
-    }else{
+    }
+    else
+    {
       returnSpeech = "Great, An OTP has been sent to your mobile number. Please enter the OTP";
     }      
   }
-  // else if(action == "ValidateOTP"){
-  //   returnSpeech = "k";
+  else if(action == "ValidateCustomerOTP"){
 
-  // }
+    return res.json({
+      speech: "",
+        messages: [
+            {
+            type: 0,
+            speech: "Just a sec... validating OTP...",
+            },
+            {
+            type: 0,
+            speech: "Great, OTP checks out fine"
+            }
+            ],
+            source: webHookSource
+         })
+
+  }
   else
   {
-     
   return res.json({
     speech: "Sorry I don't understand",
     displayText: "Sorry I don't understand",
-    source: "webhook-sample"
+    source: webHookSource
   });
 }
     
   return res.json({
     speech: returnSpeech,
     displayText: returnSpeech,
-    source: "webhook-sample"
+    source: webHookSource
   });
 }
 catch(err){
