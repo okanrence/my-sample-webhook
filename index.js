@@ -17,6 +17,8 @@ restService.post("/v1/query", function(req, res) {
 
 try{
 
+  var returnSpeech = "I'm sorry i didnt get that. can you please retry?";
+
   var action = req.body.result &&
   req.body.result.action ? req.body.action : defaultFallBackResponse
   
@@ -31,22 +33,29 @@ if(action == defaultFallBackResponse){
 
 if(action == "ValidateCustomer")
   {
-    var query = req.body.result &&
-    req.body.result.parameters &&
-    req.body.result.parameters.Account_number
-      ? req.body.result.parameters.Account_number
-      : null;
+    // var accountNumber = req.body.result &&
+    // req.body.result.parameters &&
+    // req.body.result.parameters.Account_number
+    //   ? req.body.result.parameters.Account_number
+    //   : null;
+
+    
+    returnSpeech = "Great, An OTP has been sent to your mobile number. Please enter the OTP";
+      
   }
+  // else if(action == "ValidateOTP"){
+  //   returnSpeech = "k";
+
+  // }
   else
   {
      
   return res.json({
-    speech: "Sorry I dont understand",
-    displayText: "Sorry I dont understand",
+    speech: "Sorry I don't understand",
+    displayText: "Sorry I don't understand",
     source: "webhook-sample"
   });
 }
-var returnSpeech = "Great, An OTP has been sent to your mobile number. Please enter the OTP";
     
   return res.json({
     speech: returnSpeech,
