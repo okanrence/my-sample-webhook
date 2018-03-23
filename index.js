@@ -33,15 +33,13 @@ if(action == defaultFallBackResponse){
 
 if(action == "ValidateCustomer")
   {
-    // var accountNumber = req.body.result &&
-    // req.body.result.parameters &&
-    // req.body.result.parameters.Account_number
-    //   ? req.body.result.parameters.Account_number
-    //   : null;
-
-    
-    returnSpeech = "Great, An OTP has been sent to your mobile number. Please enter the OTP";
-      
+    var accountNumber = req.body.result.parameters.Account_number
+  
+    if (!isNumeric(accountNumber)){
+      returnSpeech = "Hmmm...'" + accountNumber + "' does not appear to be a valid account number.";
+    }else{
+      returnSpeech = "Great, An OTP has been sent to your mobile number. Please enter the OTP";
+    }      
   }
   // else if(action == "ValidateOTP"){
   //   returnSpeech = "k";
@@ -86,7 +84,9 @@ restService.get("/v1/query", function(req, res) {
   });
 });
 
-
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 // restService.get("/v1/query", function(req, res) {
 //   var speech = req.query['username'];
 //   return res.json({
