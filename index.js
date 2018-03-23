@@ -2,7 +2,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-
+const defaultFallBackResponse = "defaultFallBackResponse";
 const restService = express();
 
 restService.use(
@@ -17,8 +17,19 @@ restService.post("/v1/query", function(req, res) {
 
 try{
 
+  var action = req.body.result &&
+  req.body.result.action ? req.body.action : defaultFallBackResponse
   
-  if(req.body.result.action == "ValidateCustomer")
+if(action == defaultFallBackResponse){
+
+  return res.json({
+    speech: "No Action Context",
+    displayText: "No Action Context",
+    source: "webhook-sample"
+  });
+}
+
+if(action == "ValidateCustomer")
   {
     var query = req.body.result &&
     req.body.result.parameters &&
@@ -35,7 +46,7 @@ try{
     source: "webhook-sample"
   });
 }
-var returnSpeech = "Great, " + query + " is a valid account";
+var returnSpeech = "Great, An OTP has been sent to your mobile number. Please enter the OTP";
     
   return res.json({
     speech: returnSpeech,
