@@ -20,7 +20,7 @@ try{
   var returnSpeech = "I'm sorry i didnt get that. can you please retry?";
 
   var action = req.body.result &&
-  req.body.result.action ? req.body.action : defaultFallBackResponse
+  req.body.result.action ? req.body.result.action : defaultFallBackResponse
   
 if(action == defaultFallBackResponse){
 
